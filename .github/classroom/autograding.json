@@ -1,0 +1,54 @@
+{
+  "tests": [
+    {
+      "name": "step1",
+      "setup": "npm install",
+      "run": "node --test --test-name-pattern step1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "step2",
+      "setup": "npm install",
+      "run": "node --test --test-name-pattern step2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "step3",
+      "setup": "npm install",
+      "run": "node --test --test-name-pattern step3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "step4",
+      "setup": "npm install",
+      "run": "node --test --test-name-pattern step4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    },
+    {
+      "name": "step5",
+      "setup": "npm install",
+      "run": "node --test --test-name-pattern step5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 1
+    }
+  ]
+}
