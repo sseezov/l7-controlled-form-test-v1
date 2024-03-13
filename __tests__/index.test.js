@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { test } from 'node:test';
+// import { test } from 'node:test';
 import '@testing-library/jest-dom';
 import fs from 'fs';
 import path from 'path';
@@ -16,12 +16,11 @@ let elements;
 beforeEach(() => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
-  console.log(11111111111111111111111111111111, initHtml);
   document.body.innerHTML = initHtml;
   run();
 
   elements = {
-    submit: screen.getByText(/Submit/),
+    // submit: screen.getByText(/Submit/),
     // nameInput: screen.getByRole('textbox', { name: /Name/ }),
     // emailInput: screen.getByRole('textbox', { name: /Email/ }),
     // passwordInput: screen.getByLabelText(/Password/, { selector: '[name="password"]' }),
