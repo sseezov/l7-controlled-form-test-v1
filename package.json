@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "jest --colors"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "simple-git-hooks": {
     "pre-push": "npx eslint ."
@@ -17,11 +20,23 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-markdown": "^3.0.1",
+    "jest-environment-jsdom": "^29.7.0",
     "npm-check-updates": "^16.10.12",
     "simple-git-hooks": "^2.8.1"
   },
   "keywords": [],
   "dependencies": {
-    "bootstrap": "^5.3.3"
+    "@testing-library/dom": "*",
+    "@testing-library/jest-dom": "*",
+    "@testing-library/user-event": "*",
+    "axios": "*",
+    "bootstrap": "^5.3.3",
+    "core-js": "*",
+    "jest": "^29.7.0",
+    "nock": "*",
+    "on-change": "*",
+    "prettier": "*",
+    "regenerator-runtime": "*",
+    "yup": "*"
   }
 }

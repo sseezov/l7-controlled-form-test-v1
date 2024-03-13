@@ -1,3 +1,3 @@
-import engine from './src/index.js';
+import app from './src/application.js';
 
-engine();
+app();
