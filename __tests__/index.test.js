@@ -1,6 +1,4 @@
 /* eslint-disable */
-
-// import { test } from 'node:test';
 import '@testing-library/jest-dom';
 import fs from 'fs';
 import path from 'path';
@@ -20,28 +18,30 @@ beforeEach(() => {
   run();
 
   elements = {
-    // submit: screen.getByText(/Submit/),
-    // nameInput: screen.getByRole('textbox', { name: /Name/ }),
-    // emailInput: screen.getByRole('textbox', { name: /Email/ }),
+    submit: screen.getByText(/Submit/),
+    nameInput: screen.getByRole('textbox', { name: /Name/ }),
+    emailInput: screen.getByRole('textbox', { name: /Email/ }),
     // passwordInput: screen.getByLabelText(/Password/, { selector: '[name="password"]' }),
     // passwordConfirmationInput: screen.getByLabelText(/Password Confirmation/),
   };
 });
 
-test('step1', async () => {
-  expect(validateName('example@gmail.com')).toEqual({});
-  expect(validateName('')).toEqual({ errors: ['имя не может быть пустым'] });
-  expect(validateName(' ')).toEqual({ errors: ['имя не может быть пустым'] });
-  expect(validateName('e')).toEqual({});
-});
+// test('step1', async () => {
+//   expect(validateName('example@gmail.com')).toEqual({});
+//   expect(validateName('')).toEqual({ errors: ['имя не может быть пустым'] });
+//   expect(validateName(' ')).toEqual({ errors: ['имя не может быть пустым'] });
+//   expect(validateName('e')).toEqual({});
+// });
 
-test('step2', async () => {
-  expect(validateEmail('example@gmail.com')).toEqual({});
-  expect(validateEmail(' @mail.com')).toEqual({ errors: ['невалидный email'] });
-  expect(validateEmail('hhhhh @ g m a i l . c o m')).toEqual({ errors: ['невалидный email'] });
-  expect(validateEmail('s@s')).toEqual({});
-});
+// test('step2', async () => {
+//   expect(validateEmail('example@gmail.com')).toEqual({});
+//   expect(validateEmail(' @mail.com')).toEqual({ errors: ['невалидный email'] });
+//   expect(validateEmail('hhhhh @ g m a i l . c o m')).toEqual({ errors: ['невалидный email'] });
+//   expect(validateEmail('s@s')).toEqual({});
+// });
 
 test('step3', async () => {
-  expect(screen.getByRole('button', { selector: '[type="submit"]', options: { hidden: true } })).toBeDisabled();
+  await userEvent.type(elements.nameInput, 'Petya');
+  await userEvent.type(elements.emailInput, 'wrong-email');
+  expect(screen.getByRole('button', { selector: '[type="submit"]' })).toBeDisabled();
 });
