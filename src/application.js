@@ -6,12 +6,13 @@ export default () => {
   const form = document.querySelector('form');
   const submit = document.querySelector('[type="submit"]');
   const validate = (name, email) => {
-    ({ ...validateName(name), ...validateEmail(email) }).errors
+    const r = ({ ...validateName(name), ...validateEmail(email) }).errors
       ? submit.disabled = true
-      : submit.disabled = false
+      : submit.disabled = false;
+    console.log(r);
   };
 
-  form.addEventListener('input', (e) => {
+  form.addEventListener('input', () => {
     const formData = new FormData(form);
     const name = formData.get('name');
     const email = formData.get('email');
