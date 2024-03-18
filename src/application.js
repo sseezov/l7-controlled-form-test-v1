@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import onChange from 'on-change';
 
-export const validateName = (name) => (name.trim().length ? [] : ['имя не может быть пустым']);
-export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['невалидный email']);
+export const validateName = (name) => (name.trim().length ? [] : ['name cannot be empty']);
+export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['invalid email']);
 const validateField = (fieldname, data) => (fieldname === 'name' ? validateName(data) : validateEmail(data));
 
 export default () => {
@@ -28,9 +28,13 @@ export default () => {
   const watchedState = onChange(state, (path, value) => {
     const selector = path.split('.')[1];
     const input = document.querySelector(`[name=${selector}]`);
-    validateField(selector, state.values[selector]).length > 0 
-    ? input.classList.toggle('is-invalid')
-    : input.classList.toggle('is-valid');
+    if (validateField(selector, state.values[selector]).length > 0) {
+      input.classList.remove('is-valid');
+      input.classList.add('is-invalid');
+    } else {
+      input.classList.remove('is-invalid');
+      input.classList.add('is-valid');
+    }
     submit.disabled = validate(state);
   });
 

@@ -26,36 +26,46 @@ beforeEach(() => {
   };
 });
 
-// test('step1', async () => {
-//   expect(validateName('example@gmail.com')).toEqual({});
-//   expect(validateName('')).toEqual({ errors: ['имя не может быть пустым'] });
-//   expect(validateName(' ')).toEqual({ errors: ['имя не может быть пустым'] });
-//   expect(validateName('e')).toEqual({});
-// });
+test('step1', async () => {
+  expect(validateName('example@gmail.com')).toEqual([]);
+  expect(validateName('')).toEqual(['name cannot be empty']);
+  expect(validateName(' ')).toEqual(['name cannot be empty']);
+  expect(validateName('e')).toEqual([]);
+});
 
-// test('step2', async () => {
-//   expect(validateEmail('example@gmail.com')).toEqual({});
-//   expect(validateEmail(' @mail.com')).toEqual({ errors: ['невалидный email'] });
-//   expect(validateEmail('hhhhh @ g m a i l . c o m')).toEqual({ errors: ['невалидный email'] });
-//   expect(validateEmail('s@s')).toEqual({});
-// });
+test('step2', async () => {
+  expect(validateEmail('example@gmail.com')).toEqual([]);
+  expect(validateEmail(' @mail.com')).toEqual(['invalid email']);
+  expect(validateEmail('hhhhh @ g m a i l . c o m')).toEqual(['invalid email']);
+  expect(validateEmail('s@s')).toEqual([]);
+});
 
 test('step3', async () => {
   await userEvent.type(elements.nameInput, 'Petya');
   await userEvent.type(elements.emailInput, 'wrong-email');
-  expect(screen.getByRole('button', { selector: '[type="submit"]' })).toBeDisabled();
+  expect(elements.submit).toBeDisabled();
 
   await userEvent.type(elements.nameInput, 'Petya');
   await userEvent.type(elements.emailInput, 'w@s');
-  expect(screen.getByRole('button', { selector: '[type="submit"]' })).not.toBeDisabled();
+  expect(elements.submit).not.toBeDisabled();
 });
 
 test('step4', async () => {
-  // await userEvent.type(elements.nameInput, 'Petya');
-  // await userEvent.type(elements.emailInput, 'wrong-email');
-  // expect(screen.getByRole('button', { selector: '[type="submit"]' })).toBeDisabled();
+  await userEvent.type(elements.nameInput, 'Petya');
+  await userEvent.type(elements.emailInput, 'wrong-email');
+  expect(elements.nameInput).toHaveClass('is-valid');
+  expect(elements.emailInput).toHaveClass('is-invalid');
+  expect(elements.nameInput).not.toHaveClass('is-invalid');
+  expect(elements.emailInput).not.toHaveClass('is-valid');
 
-  // await userEvent.type(elements.nameInput, 'Petya');
-  // await userEvent.type(elements.emailInput, 'w@s');
-  // expect(screen.getByRole('button', { selector: '[type="submit"]' })).not.toBeDisabled();
+  await userEvent.clear(elements.nameInput);
+  await userEvent.clear(elements.emailInput);
+  await userEvent.type(elements.nameInput, '  ');
+  await userEvent.type(elements.emailInput, 'email@s');
+  expect(elements.nameInput).toHaveClass('is-invalid');
+  expect(elements.emailInput).toHaveClass('is-valid');
+
+  await userEvent.clear(elements.nameInput);
+  await userEvent.type(elements.nameInput, 's  ');
+  expect(elements.nameInput).toHaveClass('is-valid');
 });
