@@ -49,3 +49,13 @@ test('step3', async () => {
   await userEvent.type(elements.emailInput, 'w@s');
   expect(screen.getByRole('button', { selector: '[type="submit"]' })).not.toBeDisabled();
 });
+
+test('step4', async () => {
+  // await userEvent.type(elements.nameInput, 'Petya');
+  // await userEvent.type(elements.emailInput, 'wrong-email');
+  // expect(screen.getByRole('button', { selector: '[type="submit"]' })).toBeDisabled();
+
+  // await userEvent.type(elements.nameInput, 'Petya');
+  // await userEvent.type(elements.emailInput, 'w@s');
+  // expect(screen.getByRole('button', { selector: '[type="submit"]' })).not.toBeDisabled();
+});

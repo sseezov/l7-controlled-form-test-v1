@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <title>Регистрация</title>
 </head>
+
 <body>
   <div class="container mt-5 validationForm">
     <div class="row justify-content-center">
@@ -13,21 +15,23 @@
         <h2 class="mb-4">Регистрация</h2>
         <form id="registrationForm">
           <div class="form-group">
-            <label for="inputName">Имя</label>
-            <input type="text" name="name" class="form-control" id="inputName" placeholder="Введите ваше имя" required>
+            <label for="inputName">Name</label>
+            <input type="text" class="form-control" id="inputName" placeholder="Введите ваше имя" name="name" required>
           </div>
           <div class="form-group">
-            <label for="inputEmail">Email адрес</label>
-            <input type="text" name="email" class="form-control" id="inputEmail" placeholder="Введите email" required>
+            <label for="inputEmail">Email</label>
+            <input type="text" class="form-control" id="inputEmail" placeholder="Введите email" name="email" required>
           </div>
-          <input type="submit" value="отправить" class="btn btn-primary" disabled>
+          <input type="submit" value="Submit" class="btn btn-primary" disabled>
         </form>
       </div>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="module" src="app.js"></script>
 </body>
+
 </html>

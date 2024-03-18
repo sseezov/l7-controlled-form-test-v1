@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest --colors"
+    "test": "jest --colors",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "jest": {
     "testEnvironment": "jsdom"
@@ -33,10 +36,12 @@
     "bootstrap": "^5.3.3",
     "core-js": "*",
     "jest": "^29.7.0",
+    "lodash": "^4.17.21",
     "nock": "*",
     "on-change": "*",
     "prettier": "*",
     "regenerator-runtime": "*",
+    "vite": "^5.1.6",
     "yup": "*"
   }
 }

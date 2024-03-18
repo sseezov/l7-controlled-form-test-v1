@@ -4,6 +4,9 @@ setup: install
 install:
 	npm ci
 
+run:
+	npm run dev
+
 test:
 	npm test
 

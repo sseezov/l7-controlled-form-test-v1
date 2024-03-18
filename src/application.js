@@ -1,21 +1,44 @@
-export const validateName = (name) => (name.trim().length ? {} : { errors: ['имя не может быть пустым'] });
+import _ from 'lodash';
+import onChange from 'on-change';
 
-export const validateEmail = (email) => (/\w+@\w+/.test(email) ? {} : { errors: ['невалидный email'] });
+export const validateName = (name) => (name.trim().length ? [] : ['имя не может быть пустым']);
+export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['невалидный email']);
+const validateField = (fieldname, data) => (fieldname === 'name' ? validateName(data) : validateEmail(data));
 
 export default () => {
-  const form = document.querySelector('form');
-  const submit = document.querySelector('[type="submit"]');
-  const validate = (name, email) => {
-    const r = ({ ...validateName(name), ...validateEmail(email) }).errors
-      ? submit.disabled = true
-      : submit.disabled = false;
-    console.log(r);
+  const state = {
+    errors: {
+      name: [],
+      email: [],
+    },
+    values: {
+      name: '',
+      email: '',
+    },
   };
 
-  form.addEventListener('input', () => {
-    const formData = new FormData(form);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    console.log(111, validate(name, email));
+  const form = document.querySelector('form');
+  const submit = document.querySelector('[type="submit"]');
+
+  const validate = (state) => (_.values(state.errors).reduce((acc, curr) => (curr.length > 0
+    ? acc.concat(curr)
+    : acc), [])
+    .length > 0);
+
+  const watchedState = onChange(state, (path, value) => {
+    const selector = path.split('.')[1];
+    const input = document.querySelector(`[name=${selector}]`);
+    validateField(selector, state.values[selector]).length > 0 
+    ? input.classList.toggle('is-invalid')
+    : input.classList.toggle('is-valid');
+    submit.disabled = validate(state);
+  });
+
+  form.addEventListener('input', (e) => {
+    e.preventDefault();
+    const targetName = e.target.name;
+    const targetData = new FormData(form).get(targetName);
+    watchedState.values[targetName] = targetData;
+    watchedState.errors[targetName] = (validateField(targetName, targetData));
   });
 };
