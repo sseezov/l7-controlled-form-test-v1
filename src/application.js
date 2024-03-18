@@ -20,12 +20,12 @@ export default () => {
   const form = document.querySelector('form');
   const submit = document.querySelector('[type="submit"]');
 
-  const validate = (state) => (_.values(state.errors).reduce((acc, curr) => (curr.length > 0
+  const validate = () => (_.values(state.errors).reduce((acc, curr) => (curr.length > 0
     ? acc.concat(curr)
     : acc), [])
     .length > 0);
 
-  const watchedState = onChange(state, (path, value) => {
+  const watchedState = onChange(state, (path) => {
     const selector = path.split('.')[1];
     const input = document.querySelector(`[name=${selector}]`);
     if (validateField(selector, state.values[selector]).length > 0) {
