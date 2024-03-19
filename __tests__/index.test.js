@@ -45,12 +45,22 @@ test('step3', async () => {
   await userEvent.type(elements.emailInput, 'wrong-email');
   expect(elements.submit).toBeDisabled();
 
+  await userEvent.clear(elements.nameInput);
+  await userEvent.clear(elements.emailInput);
+  await userEvent.type(elements.nameInput, ' ');
+  await userEvent.type(elements.emailInput, 'email@right');
+  expect(elements.submit).toBeDisabled();
+
+  await userEvent.clear(elements.nameInput);
+  await userEvent.clear(elements.emailInput);
   await userEvent.type(elements.nameInput, 'Petya');
   await userEvent.type(elements.emailInput, 'w@s');
   expect(elements.submit).not.toBeDisabled();
 });
 
 test('step4', async () => {
+  await userEvent.clear(elements.nameInput);
+  await userEvent.clear(elements.emailInput);
   await userEvent.type(elements.nameInput, 'Petya');
   await userEvent.type(elements.emailInput, 'wrong-email');
   expect(elements.nameInput).toHaveClass('is-valid');

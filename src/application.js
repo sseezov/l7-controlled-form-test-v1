@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import onChange from 'on-change';
+import axios from 'axios';
 
 export const validateName = (name) => (name.trim().length ? [] : ['name cannot be empty']);
 export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['invalid email']);
@@ -20,7 +21,7 @@ export default () => {
   const form = document.querySelector('form');
   const submit = document.querySelector('[type="submit"]');
 
-  const validate = () => (_.values(state.errors).reduce((acc, curr) => (curr.length > 0
+  const hasErrors = () => (_.values(state.errors).reduce((acc, curr) => (curr.length > 0
     ? acc.concat(curr)
     : acc), [])
     .length > 0);
@@ -28,14 +29,15 @@ export default () => {
   const watchedState = onChange(state, (path) => {
     const selector = path.split('.')[1];
     const input = document.querySelector(`[name=${selector}]`);
-    if (validateField(selector, state.values[selector]).length > 0) {
+    const isFieldValid = validateField(selector, state.values[selector]).length === 0;
+    if (!isFieldValid) {
       input.classList.remove('is-valid');
       input.classList.add('is-invalid');
     } else {
       input.classList.remove('is-invalid');
       input.classList.add('is-valid');
     }
-    submit.disabled = validate(state);
+    submit.disabled = hasErrors(state);
   });
 
   form.addEventListener('input', (e) => {
@@ -44,5 +46,16 @@ export default () => {
     const targetData = new FormData(form).get(targetName);
     watchedState.values[targetName] = targetData;
     watchedState.errors[targetName] = (validateField(targetName, targetData));
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    axios.post('/users', state.values)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
 };

@@ -7,6 +7,9 @@ install:
 run:
 	npm run dev
 
+start-server:
+	node bin/server.js
+
 test:
 	npm test
 
