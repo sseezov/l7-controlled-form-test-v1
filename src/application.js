@@ -6,7 +6,7 @@ export const validateName = (name) => (name.trim().length ? [] : ['name cannot b
 export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['invalid email']);
 const validateField = (fieldname, data) => (fieldname === 'name' ? validateName(data) : validateEmail(data));
 
-export default () => {
+export const run = () => {
   const state = {
     errors: {
       name: [],

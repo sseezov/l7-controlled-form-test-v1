@@ -5,7 +5,7 @@ import path from 'path';
 import testingLibrary, { configure } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
-import run, { validateEmail, validateName } from '../src/application.js';
+import * as app from '../src/application.js';
 
 const { screen, waitFor } = testingLibrary;
 nock.disableNetConnect();
@@ -16,6 +16,7 @@ beforeEach(() => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
   document.body.innerHTML = initHtml;
+  const run = app.run ? app.run : () => { }
   run();
 
   elements = {
@@ -26,17 +27,17 @@ beforeEach(() => {
 });
 
 test('step1', async () => {
-  expect(validateName('example@gmail.com')).toEqual([]);
-  expect(validateName('')).toEqual(['name cannot be empty']);
-  expect(validateName(' ')).toEqual(['name cannot be empty']);
-  expect(validateName('e')).toEqual([]);
+  expect(app.validateName('example@gmail.com')).toEqual([]);
+  expect(app.validateName('')).toEqual(['name cannot be empty']);
+  expect(app.validateName(' ')).toEqual(['name cannot be empty']);
+  expect(app.validateName('e')).toEqual([]);
 });
 
 test('step2', async () => {
-  expect(validateEmail('example@gmail.com')).toEqual([]);
-  expect(validateEmail(' @mail.com')).toEqual(['invalid email']);
-  expect(validateEmail('hhhhh @ g m a i l . c o m')).toEqual(['invalid email']);
-  expect(validateEmail('s@s')).toEqual([]);
+  expect(app.validateEmail('example@gmail.com')).toEqual([]);
+  expect(app.validateEmail(' @mail.com')).toEqual(['invalid email']);
+  expect(app.validateEmail('hhhhh @ g m a i l . c o m')).toEqual(['invalid email']);
+  expect(app.validateEmail('s@s')).toEqual([]);
 });
 
 test('step3', async () => {
@@ -103,6 +104,7 @@ test('step5', async () => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
   document.body.innerHTML = initHtml;
+  const run = app.run ? app.run : () => { }
   run();
 
   elements = {
