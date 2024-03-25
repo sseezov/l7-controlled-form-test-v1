@@ -8,6 +8,7 @@ import nock from 'nock';
 import run, { validateEmail, validateName } from '../src/application.js';
 
 const { screen, waitFor } = testingLibrary;
+nock.disableNetConnect();
 
 let elements;
 
@@ -21,8 +22,6 @@ beforeEach(() => {
     submit: screen.getByText(/Submit/),
     nameInput: screen.getByRole('textbox', { name: /Name/ }),
     emailInput: screen.getByRole('textbox', { name: /Email/ }),
-    // passwordInput: screen.getByLabelText(/Password/, { selector: '[name="password"]' }),
-    // passwordConfirmationInput: screen.getByLabelText(/Password Confirmation/),
   };
 });
 
@@ -79,3 +78,58 @@ test('step4', async () => {
   await userEvent.type(elements.nameInput, 's  ');
   expect(elements.nameInput).toHaveClass('is-valid');
 });
+
+
+test('step5', async () => {
+  let scope = nock('http://localhost')
+    .post('/users')
+    .reply(200, {
+      message: 'user has been created sucessfully'
+    });
+
+  await userEvent.clear(elements.nameInput);
+  await userEvent.clear(elements.emailInput);
+  await userEvent.type(elements.nameInput, 'Petya');
+  await userEvent.type(elements.emailInput, 'correct@email');
+
+  await userEvent.click(elements.submit);
+  await waitFor(() => {
+    expect(document.body).not.toHaveClass('container')
+    const p = document.querySelector('p');
+    expect(p).toHaveTextContent('user has been created sucessfully')
+  });
+
+  // для сохранения количества тестов равного 5, мне пришлось снова проинициализировать приложение
+  const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
+  const initHtml = fs.readFileSync(pathToFixture).toString();
+  document.body.innerHTML = initHtml;
+  run();
+
+  elements = {
+    submit: screen.getByText(/Submit/),
+    nameInput: screen.getByRole('textbox', { name: /Name/ }),
+    emailInput: screen.getByRole('textbox', { name: /Email/ }),
+  };
+
+  scope = nock('http://localhost')
+    .post('/users')
+    .reply(200, {
+      message: 'there is no spoon'
+    });
+
+  await userEvent.clear(elements.nameInput);
+  await userEvent.clear(elements.emailInput);
+  await userEvent.type(elements.nameInput, 'Petya');
+  await userEvent.type(elements.emailInput, 'correct@email');
+
+  await userEvent.click(elements.submit);
+  await waitFor(() => {
+    const p = document.querySelector('p');
+    expect(p).toHaveTextContent('there is no spoon')
+  });
+
+  scope.done();
+});
+
+
+

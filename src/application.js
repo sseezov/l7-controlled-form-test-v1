@@ -52,7 +52,7 @@ export default () => {
     e.preventDefault();
     axios.post('/users', state.values)
       .then((response) => {
-        console.log(response);
+        document.body.innerHTML = `<p>${response.data.message}</p>`;
       })
       .catch((error) => {
         console.log(error);
