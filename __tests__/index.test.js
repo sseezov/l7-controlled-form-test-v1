@@ -26,20 +26,13 @@ beforeEach(() => {
 });
 
 test('step1', async () => {
-  expect(validateName('example@gmail.com')).toEqual([]);
-  expect(validateName('')).toEqual(['name cannot be empty']);
-  expect(validateName(' ')).toEqual(['name cannot be empty']);
-  expect(validateName('e')).toEqual([]);
+  const formContainer = document.querySelector('.form-container');
+  expect(formContainer.querySelector('form')
+    .querySelector('.form-group')
+    .querySelector('input[class="form-control"]')).not.toEqual(null);
 });
 
 test('step2', async () => {
-  expect(validateEmail('example@gmail.com')).toEqual([]);
-  expect(validateEmail(' @mail.com')).toEqual(['invalid email']);
-  expect(validateEmail('hhhhh @ g m a i l . c o m')).toEqual(['invalid email']);
-  expect(validateEmail('s@s')).toEqual([]);
-});
-
-test('step3', async () => {
   await userEvent.type(elements.nameInput, 'Petya');
   await userEvent.type(elements.emailInput, 'wrong-email');
   expect(elements.submit).toBeDisabled();
@@ -57,7 +50,7 @@ test('step3', async () => {
   expect(elements.submit).not.toBeDisabled();
 });
 
-test('step4', async () => {
+test('step3', async () => {
   await userEvent.clear(elements.nameInput);
   await userEvent.clear(elements.emailInput);
   await userEvent.type(elements.nameInput, 'Petya');
@@ -80,7 +73,7 @@ test('step4', async () => {
 });
 
 
-test('step5', async () => {
+test('step4', async () => {
   let scope = nock('http://localhost')
     .post('/users')
     .reply(200, {

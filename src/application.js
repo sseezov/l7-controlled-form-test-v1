@@ -7,6 +7,23 @@ export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['invalid 
 const validateField = (fieldname, data) => (fieldname === 'name' ? validateName(data) : validateEmail(data));
 
 export default () => {
+  const formHTML = `
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="inputName">Name</label>
+        <input type="text" class="form-control" id="inputName" placeholder="Введите ваше имя" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="inputEmail">Email</label>
+        <input type="text" class="form-control" id="inputEmail" placeholder="Введите email"
+        name="email" required>
+      </div>
+      <input type="submit" value="Submit" class="btn btn-primary" disabled>
+    </form>`;
+
+  const formContainer = document.querySelector('.form-container');
+  formContainer.innerHTML = formHTML;
+
   const state = {
     errors: {
       name: [],
