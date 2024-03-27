@@ -16,7 +16,6 @@ beforeEach(() => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
   document.body.innerHTML = initHtml;
-  const run = app.run ? app.run : () => { }
   run();
 
   elements = {
@@ -97,7 +96,6 @@ test('step4', async () => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
   document.body.innerHTML = initHtml;
-  const run = app.run ? app.run : () => { }
   run();
 
   elements = {
