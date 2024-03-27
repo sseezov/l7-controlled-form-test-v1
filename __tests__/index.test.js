@@ -2,10 +2,10 @@
 import '@testing-library/jest-dom';
 import fs from 'fs';
 import path from 'path';
-import testingLibrary, { configure } from '@testing-library/dom';
+import testingLibrary from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
-import run, { validateEmail, validateName } from '../src/application.js';
+import run from '../src/application.js';
 
 const { screen, waitFor } = testingLibrary;
 nock.disableNetConnect();
