@@ -4,11 +4,14 @@ setup: install
 install:
 	npm ci
 
-run:
+dev:
 	npm run dev
 
 start-server:
 	node bin/server.js
+
+run:
+	make start-server & make dev
 
 test:
 	npm test
