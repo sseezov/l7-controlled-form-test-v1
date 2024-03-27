@@ -2,10 +2,10 @@
 import '@testing-library/jest-dom';
 import fs from 'fs';
 import path from 'path';
-import testingLibrary, { configure } from '@testing-library/dom';
+import testingLibrary from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import nock from 'nock';
-import * as app from '../src/application.js';
+import run from '../src/application.js';
 
 const { screen, waitFor } = testingLibrary;
 nock.disableNetConnect();
@@ -16,7 +16,6 @@ beforeEach(() => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
   document.body.innerHTML = initHtml;
-  const run = app.run ? app.run : () => { }
   run();
 
   elements = {
@@ -27,20 +26,13 @@ beforeEach(() => {
 });
 
 test('step1', async () => {
-  expect(app.validateName('example@gmail.com')).toEqual([]);
-  expect(app.validateName('')).toEqual(['name cannot be empty']);
-  expect(app.validateName(' ')).toEqual(['name cannot be empty']);
-  expect(app.validateName('e')).toEqual([]);
+  const formContainer = document.querySelector('.form-container');
+  expect(formContainer.querySelector('form')
+    .querySelector('.form-group')
+    .querySelector('input[class="form-control"]')).not.toEqual(null);
 });
 
 test('step2', async () => {
-  expect(app.validateEmail('example@gmail.com')).toEqual([]);
-  expect(app.validateEmail(' @mail.com')).toEqual(['invalid email']);
-  expect(app.validateEmail('hhhhh @ g m a i l . c o m')).toEqual(['invalid email']);
-  expect(app.validateEmail('s@s')).toEqual([]);
-});
-
-test('step3', async () => {
   await userEvent.type(elements.nameInput, 'Petya');
   await userEvent.type(elements.emailInput, 'wrong-email');
   expect(elements.submit).toBeDisabled();
@@ -58,7 +50,7 @@ test('step3', async () => {
   expect(elements.submit).not.toBeDisabled();
 });
 
-test('step4', async () => {
+test('step3', async () => {
   await userEvent.clear(elements.nameInput);
   await userEvent.clear(elements.emailInput);
   await userEvent.type(elements.nameInput, 'Petya');
@@ -81,7 +73,7 @@ test('step4', async () => {
 });
 
 
-test('step5', async () => {
+test('step4', async () => {
   let scope = nock('http://localhost')
     .post('/users')
     .reply(200, {
@@ -104,7 +96,6 @@ test('step5', async () => {
   const pathToFixture = path.join('__tests__', '__fixtures__', 'index.html');
   const initHtml = fs.readFileSync(pathToFixture).toString();
   document.body.innerHTML = initHtml;
-  const run = app.run ? app.run : () => { }
   run();
 
   elements = {
