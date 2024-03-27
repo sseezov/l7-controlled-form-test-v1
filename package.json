@@ -1,0 +1,48 @@
+{
+  "name": "l1-basic-functions-v1",
+  "version": "1.0.0",
+  "description": "* Нельзя менять уже написанный код, тесты и другие файлы добавленные в проект * Выполняйте коммиты и пуши как можно чаще. Так вы будете видеть какие из тестов сработают, а какие нет. * Во время работы не забывайте запускать саму утилиту и npm test",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest --colors",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "simple-git-hooks": {
+    "pre-push": "npx eslint ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.46.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-markdown": "^3.0.1",
+    "jest-environment-jsdom": "^29.7.0",
+    "npm-check-updates": "^16.10.12",
+    "simple-git-hooks": "^2.8.1"
+  },
+  "keywords": [],
+  "dependencies": {
+    "@testing-library/dom": "*",
+    "@testing-library/jest-dom": "*",
+    "@testing-library/user-event": "*",
+    "axios": "*",
+    "bootstrap": "^5.3.3",
+    "core-js": "*",
+    "fastify": "^4.26.2",
+    "jest": "^29.7.0",
+    "lodash": "^4.17.21",
+    "nock": "*",
+    "on-change": "*",
+    "prettier": "*",
+    "regenerator-runtime": "*",
+    "vite": "^5.1.6",
+    "yup": "*"
+  }
+}
