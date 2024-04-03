@@ -2,8 +2,8 @@ import _ from 'lodash';
 import onChange from 'on-change';
 import axios from 'axios';
 
-export const validateName = (name) => (name.trim().length ? [] : ['name cannot be empty']);
-export const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['invalid email']);
+const validateName = (name) => (name.trim().length ? [] : ['name cannot be empty']);
+const validateEmail = (email) => (/\w+@\w+/.test(email) ? [] : ['invalid email']);
 const validateField = (fieldname, data) => (fieldname === 'name' ? validateName(data) : validateEmail(data));
 
 export default () => {
